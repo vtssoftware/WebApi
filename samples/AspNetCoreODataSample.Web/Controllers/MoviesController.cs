@@ -20,14 +20,20 @@ namespace AspNetCoreODataSample.Web.Controllers
         {
             _context = context;
 
-            if (_context.Movies.Count() == 0)
+            if (_context.Movies.Count() == 1)
             {
                 Movie m = new Movie
                 {
-                    Title = "Conan",
+                    ID=2,
+                    Title = "Titanic",
                     ReleaseDate = new DateTimeOffset(new DateTime(2017, 3, 3)),
                     Genre = Genre.Comedy,
-                    Price = 1.99m
+                    Price = 1.99m,
+                    //Actors = new List<Actor>()
+                    //{
+                    //    new Actor(){Id = 1, Name = "Name1"},
+                    //    new Actor(){Id = 2, Name = "Name2"},
+                    //}
                 };
                 _context.Movies.Add(m);
                 _context.SaveChanges();

@@ -2,6 +2,7 @@
 // Licensed under the MIT License.  See License.txt in the project root for license information.
 
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using System.Linq;
@@ -186,7 +187,13 @@ namespace Microsoft.AspNet.OData.Formatter
                 writeContext.MetadataLevel = metadataLevel;
                 writeContext.SelectExpandClause = internalRequest.Context.SelectExpandClause;
 
-                serializer.WriteObject(value, type, messageWriter, writeContext);
+                ArrayList materialValue = new ArrayList();
+                foreach(var val in ((IQueryable)value))
+                {
+                    materialValue.Add(val);
+                }
+
+                serializer.WriteObject(materialValue, type, messageWriter, writeContext);
             }
         }
 

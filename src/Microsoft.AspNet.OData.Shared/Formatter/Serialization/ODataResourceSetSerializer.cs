@@ -124,7 +124,13 @@ namespace Microsoft.AspNet.OData.Formatter.Serialization
             Uri nextPageLink = resourceSet.NextPageLink;
             resourceSet.NextPageLink = null;
 
+
             writer.WriteStart(resourceSet);
+
+            var test1 = enumerable.GetEnumerator();
+            test1.MoveNext();
+            var test2 = enumerable.GetEnumerator();
+            test2.MoveNext();
 
             foreach (object item in enumerable)
             {

@@ -16,6 +16,8 @@ namespace AspNetCoreODataSample.Web.Models
             {
                 var builder = new ODataConventionModelBuilder();
                 builder.EntitySet<Movie>("Movies");
+                builder.EntitySet<Actor>("Actors");
+
                 _edmModel = builder.GetEdmModel();
             }
 
