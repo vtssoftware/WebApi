@@ -61,6 +61,22 @@ namespace Microsoft.AspNet.OData.Query.Expressions
         /// <inheritdoc />
         public bool TryGetPropertyValue(string propertyName, out object value)
         {
+            var instancePropInfo = this.GetType().GetProperty("Instance");
+            if (instancePropInfo != null)
+            {
+                var instance = instancePropInfo.GetValue(this);
+                var propInfo = instance.GetType().GetProperty(propertyName);
+                if (propInfo != null)
+                {
+                    var instanceValue = propInfo.GetValue(instance);
+                    if (instanceValue != null)
+                    {
+                        value = instanceValue;
+                        return true;
+                    }
+                }
+            }
+
             // look into the container first to see if it has that property. container would have it 
             // if the property was expanded.
             if (Container != null)

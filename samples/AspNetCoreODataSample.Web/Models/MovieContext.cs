@@ -13,5 +13,6 @@ namespace AspNetCoreODataSample.Web.Models
         }
 
         public DbSet<Movie> Movies { get; set; }
+        public DbSet<Actor> Actors { get; set; }
     }
 }

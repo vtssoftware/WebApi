@@ -7,6 +7,7 @@ using System.Linq;
 using AspNetCoreODataSample.Web.Models;
 using Microsoft.AspNet.OData;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 
 namespace AspNetCoreODataSample.Web.Controllers
 {
@@ -27,7 +28,12 @@ namespace AspNetCoreODataSample.Web.Controllers
                     Title = "Conan",
                     ReleaseDate = new DateTimeOffset(new DateTime(2017, 3, 3)),
                     Genre = Genre.Comedy,
-                    Price = 1.99m
+                    Price = 1.99m,
+                    Actors = new List<Actor>()
+                    {
+                        new Actor(){Id = 1, Name = "Arnold"},
+                        new Actor(){Id = 2, Name = "James"},
+                    }
                 };
                 _context.Movies.Add(m);
                 _context.SaveChanges();
@@ -59,7 +65,8 @@ namespace AspNetCoreODataSample.Web.Controllers
         {
             if (Request.Path.Value.Contains("efcore"))
             {
-                return Ok(_context.Movies);
+                var result = _context.Movies.Include(e => e.Actors);
+                return Ok(result);
             }
             else
             {
